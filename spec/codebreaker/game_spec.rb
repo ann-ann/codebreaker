@@ -151,7 +151,7 @@ module Codebreaker
       end
 
       it "saves info about game if user want" do
-        file = mock('file')
+        file = double('file')
         output.stub(:gets).and_return("y")
         expect(File).to receive(:open).with("scores.csv", "w").and_yield(file)
         expect(file).to receive(:write).with(game.user)
