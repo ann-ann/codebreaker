@@ -1,10 +1,9 @@
 require 'spec_helper'
  
- 
 module Codebreaker
   describe Game do
 
-  	let(:output) { double('output').as_null_object }
+    let(:output) { double('output').as_null_object }
     let(:game)   { Game.new(output) }
     before {game.start('1234') }
 
@@ -39,7 +38,7 @@ module Codebreaker
          expect{ game.guess('1111') }.to change{ game.user.turns_counter }.by(1)
       end
 
-    	context "no matches" do
+      context "no matches" do
         it "sends no signs" do 
           expect(output).to receive(:puts).with('') 
           game.guess('5555')
@@ -62,8 +61,8 @@ module Codebreaker
 
       context "2 exact matchs and 2 num matches" do
         it "sends ++-- signs" do
-        	expect(output).to receive(:puts).with('++--')
-        	game.guess('1243')
+          expect(output).to receive(:puts).with('++--')
+          game.guess('1243')
         end
       end
 
@@ -77,10 +76,9 @@ module Codebreaker
       context "all exact matches" do
         it "sends message about user won" do
           expect(output).to receive(:puts).with('++++')
-        	game.guess('1234')
+          game.guess('1234')
         end
       end
-
     end
     # Code-breaker requests hint
     describe "#hint" do
