@@ -22,7 +22,7 @@ module Codebreaker
     def guess(guess)
       guess_result = ''
       (0..3).each do |i|
-    	  guess_result << ((guess[i] == @code[i])? "+" : "-")  if @code.include? guess[i]
+        guess_result << ((guess[i] == @code[i])? "+" : "-")  if @code.include? guess[i]
       end
       @user.turns_counter += 1
       @output.puts(guess_result) 	
@@ -37,7 +37,6 @@ module Codebreaker
     end
 
     def proccess_output
-
       if @guess_result == '++++'
         @output.puts('You win!!')
       elsif @user.turns_counter >= 20
@@ -60,10 +59,8 @@ module Codebreaker
         File.open "scores.csv", "w" do |file| 
           file.write(user) 
         end
-      end
-        
+      end       
     end
-
   end
 
   class User

@@ -31,7 +31,7 @@ TODO: Write usage instructions here
 
 ## Game instructions:
 
-Code-breaker starts game
+Code-breaker starts game\n
 The code-breaker opens a shell, types a command, and sees a welcome message and a prompt to enter the first guess.
 
 Code-breaker submits guess
