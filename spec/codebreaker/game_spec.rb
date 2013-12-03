@@ -1,18 +1,14 @@
 require 'spec_helper'
- require 'codebreaker'
 
 module Codebreaker
   describe Game do
 
     let(:output) { double('output').as_null_object }
     let(:game)   { Game.new(output) }
-    before do 
-      game.start
-      game.code = '1234' 
-    end
+    before {game.start; game.code = '1234'}
 
-    # Code-breaker starts game 
     describe "#start" do
+
       it "sends a welcome message" do
         expect(output).to receive(:puts).with('Welcome to Codebreaker!')
         game.start
@@ -35,9 +31,8 @@ module Codebreaker
       end
     end
 
-    # Code-breaker submits guess
-    describe "#guess" do
-       
+    describe "#guess" do  
+
       it "increase number of times user tried to guess" do
          expect(game.user).to receive(:lost_turn)
          game.guess('1111')
@@ -79,7 +74,7 @@ module Codebreaker
         end
       end
     end
-    # Code-breaker requests hint
+
     describe "#hint" do
       
       it "decreases user score" do
@@ -105,7 +100,6 @@ module Codebreaker
       end
     end
 
-    # Code-breaker wins game, Code-breaker loses game
     describe "#proccess_output" do
       
       context "user win if alll nums opened (marked as +)" do
@@ -132,7 +126,6 @@ module Codebreaker
       end
     end
 
-    # Code-breaker plays again
     describe "#promt_game" do
       
       it "ask user about new game" do
@@ -146,7 +139,7 @@ module Codebreaker
         game.promt_game
       end
     end
-    # Code-breaker saves score
+   
     describe "#save_score" do
       
       it "ask user to save information about game" do

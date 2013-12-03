@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 module Codebreaker
- describe User do
-      let(:user)   { User.new }
+  describe User do
+
+    let(:user){ User.new }
+
     context "#lost_turn" do
       it "decreases turns count" do
         expect {user.lost_turn}.to change{user.turns_counter}.from(10).to(9)
@@ -22,6 +24,5 @@ module Codebreaker
         expect{user.decrease_score_by_hint}.to change{user.score}.by(-50)
       end
     end
-
   end
 end

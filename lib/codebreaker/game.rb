@@ -41,9 +41,9 @@ module Codebreaker
       if @guess_result == '++++'
         @output.puts('You won!!')
       elsif @user.out_of_turns?
-          @output.puts('Sorry, you lost this game')
-        else
-          @output.puts('Close enough :) Try again!')
+        @output.puts('Sorry, you lost this game')
+      else
+        @output.puts('Close enough :) Try again!')
       end
     end
 
@@ -62,7 +62,5 @@ module Codebreaker
         end
       end       
     end
-
   end
-
 end
