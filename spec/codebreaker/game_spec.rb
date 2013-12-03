@@ -37,9 +37,10 @@ module Codebreaker
     # Code-breaker submits guess
     describe "#guess" do
        
-      it "increase number of times user tried to guess" do
-         expect{ game.guess('1111') }.to change{ game.user.turns_counter }.by(1)
-      end
+      # it "increase number of times user tried to guess" do
+      #    expect{ game.user }.to receive(:lost_turn)
+      #    game.guess('1111')
+      # end
 
       context "no matches" do
         it "sends no signs" do 
@@ -111,7 +112,7 @@ module Codebreaker
 
       context "user losses if there was more than 20 turns" do
         it "shows messahe 'Sorry, you lost this game'" do
-          game.user.turns_counter = 20
+          game.user.turns_counter = 0
           expect(output).to receive(:puts).with('Sorry, you lost this game')
           game.proccess_output
         end
@@ -155,5 +156,24 @@ module Codebreaker
         game.save_score
       end
     end
+  end
+
+  describe User do
+      let(:user)   { User.new }
+    context "#lost_turn" do
+      it "decreases turns count" do
+        expect {user.lost_turn}.to change{user.turns_counter}.from(10).to(9)
+      end
+    end
+
+    context "#out_of_turns?" do
+      it {expect(user).to_not be_out_of_turns}
+      it "returns false if no turns left" do
+        10.times {user.lost_turn}
+        expect(user).to be_out_of_turns
+      end
+     
+    end
+
   end
 end

@@ -24,7 +24,7 @@ module Codebreaker
       (0..3).each do |i|
         @guess_result << ((guess[i] == @code[i])? "+" : "-")  if @code.include? guess[i]
       end
-      @user.turns_counter += 1
+      @user.lost_turn
       @guess_result
     end
     
@@ -39,7 +39,7 @@ module Codebreaker
     def proccess_output
       if @guess_result == '++++'
         @output.puts('You win!!')
-      elsif @user.turns_counter >= 20
+      elsif @user.out_of_turns?
           @output.puts('Sorry, you lost this game')
         else
           @output.puts('Close enough :) Try again!')
@@ -69,24 +69,23 @@ module Codebreaker
     def initialize(username = 'no_name')
       @username = username
       @score = 0
-      @turns_counter = 0
+      @turns_counter = 10
     end
 
     def to_s
       @username + " " + @score + " " + @turns_counter
     end
 
+    def lost_turn
+      @turns_counter -= 1
+    end
+
+    def out_of_turns?
+      true if @turns_counter <= 0
+    end
+
   end
-
-  # class Code 
-    
-  #   def initialize
-      
-  #   end
-
-  # end
-
 end
-
+# TODO scoring
 
 
