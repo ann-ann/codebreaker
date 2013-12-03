@@ -33,12 +33,13 @@ module Codebreaker
       (0..hint_value.size).each { |i| tmp << code[i] } 
       hint_value = tmp
       (code.size - hint_value.size).times {tmp << 'x'}
+      @user.decrease_score_by_hint
       @output.puts(tmp)
     end
 
     def proccess_output
       if @guess_result == '++++'
-        @output.puts('You win!!')
+        @output.puts('You won!!')
       elsif @user.out_of_turns?
           @output.puts('Sorry, you lost this game')
         else
@@ -61,10 +62,11 @@ module Codebreaker
         end
       end       
     end
+
   end
 
   class User
-    attr_accessor :username, :score, :turns_counter
+    attr_accessor :username, :turns_counter
 
     def initialize(username = 'no_name')
       @username = username
@@ -84,8 +86,12 @@ module Codebreaker
       true if @turns_counter <= 0
     end
 
+    def score
+      @score + @turns_counter * 100
+    end
+
+    def decrease_score_by_hint
+      @score -= 50
+    end
   end
 end
-# TODO scoring
-
-

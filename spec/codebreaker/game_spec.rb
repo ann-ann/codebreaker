@@ -37,10 +37,10 @@ module Codebreaker
     # Code-breaker submits guess
     describe "#guess" do
        
-      # it "increase number of times user tried to guess" do
-      #    expect{ game.user }.to receive(:lost_turn)
-      #    game.guess('1111')
-      # end
+      it "increase number of times user tried to guess" do
+         expect(game.user).to receive(:lost_turn)
+         game.guess('1111')
+      end
 
       context "no matches" do
         it "sends no signs" do 
@@ -81,6 +81,11 @@ module Codebreaker
     # Code-breaker requests hint
     describe "#hint" do
       
+      it "decreases user score" do
+        expect(game.user).to receive(:decrease_score_by_hint)
+        game.hint
+      end
+
       context "first hint where no nums guessed" do
         it "shows first num and 'x' signs for hidden nums" do
           game.guess_result = ''
@@ -105,7 +110,7 @@ module Codebreaker
       context "user win if alll nums opened (marked as +)" do
         it "shows message 'You win!!'" do
           game.guess_result = '++++'
-          expect(output).to receive(:puts).with("You win!!")
+          expect(output).to receive(:puts).with("You won!!")
           game.proccess_output
         end
       end
@@ -172,7 +177,12 @@ module Codebreaker
         10.times {user.lost_turn}
         expect(user).to be_out_of_turns
       end
-     
+    end
+
+    context "#decrease_score_by_hint" do
+      it "decreases user score" do
+        expect{user.decrease_score_by_hint}.to change{user.score}.by(-50)
+      end
     end
 
   end
