@@ -5,7 +5,10 @@ module Codebreaker
 
     let(:output) { double('output').as_null_object }
     let(:game)   { Game.new(output) }
-    before {game.start('1234') }
+    before do 
+      game.start
+      game.code = '1234' 
+    end
 
     # Code-breaker starts game 
     describe "#start" do
@@ -21,13 +24,13 @@ module Codebreaker
       end
 
       it "generates a secret code" do
-        game.start()
+        game.start
         expect(game.code).to_not be_nil
       end
 
       it "prompts for the first guess" do
         expect(output).to receive(:puts).with('Enter guess:')
-        game.start()
+        game.start
       end
     end
 
@@ -40,43 +43,37 @@ module Codebreaker
 
       context "no matches" do
         it "sends no signs" do 
-          expect(output).to receive(:puts).with('') 
-          game.guess('5555')
+          expect(game.guess('5555')).to eql('')
         end 
       end
       
       context "1 num match" do
         it "sends - sign" do
-          expect(output).to receive(:puts).with('-')
-          game.guess('9871')
+          expect(game.guess('9871')).to eql('-')
         end
       end
       
       context "1 exact match" do
         it "sends + sign" do
-          expect(output).to receive(:puts).with('+')
-          game.guess('1678')
+          expect(game.guess('1678')).to eql('+')
         end
       end
 
       context "2 exact matchs and 2 num matches" do
         it "sends ++-- signs" do
-          expect(output).to receive(:puts).with('++--')
-          game.guess('1243')
+          expect(game.guess('1243')).to eql('++--')
         end
       end
 
       context "all num matches" do
         it "sends ---- signs" do
-          expect(output).to receive(:puts).with('----')
-          game.guess('4321')
+          expect(game.guess('4321')).to eql('----')
         end
       end
 
       context "all exact matches" do
         it "sends message about user won" do
-          expect(output).to receive(:puts).with('++++')
-          game.guess('1234')
+          expect(game.guess('1234')).to eql('++++')
         end
       end
     end
@@ -122,7 +119,7 @@ module Codebreaker
 
       context "user continue game" do
         it "shows some posotive motivation message" do
-          expect(output).to receive(:puts).with('Go on!')
+          expect(output).to receive(:puts).with('Close enough :) Try again!')
           game.proccess_output
         end
       end

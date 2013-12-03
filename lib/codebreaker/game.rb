@@ -11,8 +11,8 @@ module Codebreaker
       @user = User.new
     end
 
-    def start(code = nil)
-      @code = code || Random.rand(1111..6666)
+    def start
+      @code = Random.rand(1111..6666)
       @output.puts 'Welcome to Codebreaker!'
       @output.puts 'Please enter username: '
       @user.username = @output.gets
@@ -20,12 +20,12 @@ module Codebreaker
     end
     
     def guess(guess)
-      guess_result = ''
+      @guess_result = ''
       (0..3).each do |i|
-        guess_result << ((guess[i] == @code[i])? "+" : "-")  if @code.include? guess[i]
+        @guess_result << ((guess[i] == @code[i])? "+" : "-")  if @code.include? guess[i]
       end
       @user.turns_counter += 1
-      @output.puts(guess_result) 	
+      @guess_result
     end
     
     def hint
@@ -42,7 +42,7 @@ module Codebreaker
       elsif @user.turns_counter >= 20
           @output.puts('Sorry, you lost this game')
         else
-          @output.puts('Go on!')
+          @output.puts('Close enough :) Try again!')
       end
     end
 
@@ -77,6 +77,15 @@ module Codebreaker
     end
 
   end
+
+  # class Code 
+    
+  #   def initialize
+      
+  #   end
+
+  # end
+
 end
 
 
